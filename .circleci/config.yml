@@ -49,7 +49,7 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      - run: return 0
+      - run: return 1
       - destroy_environment  
  
 workflows:
