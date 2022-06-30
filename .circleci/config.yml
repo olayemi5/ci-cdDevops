@@ -50,7 +50,7 @@ jobs:
     steps:
       - run: return 1
       - destroy_environment 
-        when: on_fail 
+          when: on_fail 
  
 workflows:
   say-hello-workflow:
