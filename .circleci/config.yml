@@ -51,7 +51,7 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - run: return 1
-      - destroy_environment  
+      - destroy_environment   
  
 workflows:
   say-hello-workflow:
