@@ -2,6 +2,22 @@
 version: 2.1
 
 jobs:
+
+    # create_infrastructure: 
+    #     docker:
+    #       - image: amazon/aws-cli
+    #     steps:
+    #       - checkout
+    #       - run:
+    #           name: Create Cloudformation Stack
+    #           command: |
+    #             aws cloudformation deploy \
+    #               --template-file template.yml \
+    #               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
+    #               --region us-east-1
+    #       - run: return 1
+    #       - destroy_environment
+
     configure_infrastructure: 
       docker:
         - image: python:3.7-alpine3.11
@@ -18,8 +34,25 @@ jobs:
             name: Configure server
             command: |
               ansible-playbook  -i inventory.txt  main.yml
+    
+    smoke_test:
+      docker:
+        - image: alpine:latest
+      steps:
+        - run: apk add --update curl
+        - run:
+            name: smoke test
+            command: |
+              URL="https://blog.udacity.com/"
+              # Test if website exists
+              if curl -s --head ${URL} 
+              then
+                return 0
+              else
+                return 1
+              fi
  
 workflows:
   say-hello-workflow:
     jobs:
-      - configure_infrastructure
+      - smoke_test
