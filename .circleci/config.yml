@@ -70,3 +70,4 @@ workflows:
       - smoke_test:
           requires: 
               - create_infrastructure
+              
